@@ -1,0 +1,63 @@
+(1) 5v >> 150ohms >> IR emitter >> gnd
+(2) 5v >> 150~200 k-ohms >> IR detector >> gnd
+                         >> Analog input
+
+relay IN - 0 connect
+
+SDA A4
+SCL A5
+
+mpu1:
+3.3V-Vdd
+GND - GND
+A5 - SCL
+A4 - SDA
+A0 - GND
+2 - INT
+
+mpu2:
+3.3V-Vdd
+GND - GND
+A5 - SCL
+A4 - SDA
+A0 - 3.3V
+3 - INT
+
+
+
+(1) adjust_orientation1()
+    do
+        err1 = readGyro1()
+	motor0(err1)
+    while(err1<Eo)
+    base1 = UP
+    base2 = DOWN    
+(2) liftTo1()
+    do
+	dist = readIR1()
+	motor1(dist)
+    while(dist<Ed)
+(3) flipFW()
+    do
+	motor(FW)
+	cl1 = readGyro1()
+    while(cl1==180)
+    base1 = DOWN
+(4) adjust_orientation2()
+    do
+        err2 = readGyro2()
+	motor(err2)
+    while(err1<Eo)
+    base1 = DOWN
+    base2 = UP    
+(5) liftTo2()
+    do
+	dist = readIR2()
+	motor1(dist)
+    while(dist<Ed)
+(3) flipFW()
+    do
+	motor(FW)
+	cl2 = readGyro2()
+    while(cl2==180)
+    base2 = DOWN
